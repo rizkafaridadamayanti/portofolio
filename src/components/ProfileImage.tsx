@@ -8,7 +8,7 @@ interface ProfileImageProps {
 }
 
 /**
- * Menampilkan foto pribadi Rizka dari public/assets/rizka.png.
+ * Menampilkan foto pribadi Rizka dari public/assets/rizka.webp.
  * Bila file belum tersedia (404 / gagal load), otomatis menampilkan
  * avatar inisial "RFD" bernuansa biru sebagai cadangan.
  */
