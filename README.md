@@ -23,4 +23,4 @@ npm run lint     # type-check
 | `src/game/` | Mini game Stack |
 | `src/components/` | Komponen bersama (modal proyek, foto profil) |
 
-Foto profil: `public/assets/rizka.png`. Form kontak memakai [Web3Forms](https://web3forms.com); key diatur di `portfolioData.ts`.
+Screenshot proyek: `public/assets/projects/`. Foto profil: `public/assets/rizka.webp`. Form kontak memakai [Web3Forms](https://web3forms.com); key diatur di `portfolioData.ts`.

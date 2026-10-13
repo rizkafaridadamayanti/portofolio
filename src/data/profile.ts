@@ -1,9 +1,9 @@
 /*
   Foto pribadi Rizka.
-  Letakkan file foto di: public/assets/rizka.png  (atau .jpg — sesuaikan path di bawah)
+  Letakkan file foto di: public/assets/rizka.webp  (atau format lain — sesuaikan path di bawah)
   Jika file belum ada, komponen otomatis menampilkan avatar inisial "RFD".
 */
-export const PROFILE_PHOTO = '/assets/rizka.png';
+export const PROFILE_PHOTO = '/assets/rizka.webp';
 
 /*
   Form kontak — pakai Web3Forms (gratis, TANPA aktivasi klik email).
