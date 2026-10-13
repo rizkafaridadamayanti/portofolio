@@ -1,0 +1,396 @@
+@import "tailwindcss";
+
+/*
+  ============================================================
+  PALET "PUTIH – ABU – BIRU" + AKSEN HIJAU, MULTI-TINT PER SECTION
+  Setiap section punya warna latar lembut sendiri (biru / hijau /
+  sky / lavender / abu) sehingga terasa seperti halaman berbeda,
+  tapi semuanya tetap pastel. Kontras aksen & teks dinaikkan.
+  Nama variabel/kelas lama (cream/warm/honey/clay) dipertahankan —
+  hanya nilainya yang berubah; jangan tertukar dengan tema krem lama.
+  ============================================================
+*/
+:root {
+  /* Permukaan netral (panel kecil di dalam kartu) */
+  --cream: #f1f4f9;        /* panel halus di dalam kartu putih */
+  --cream-2: #e8ecf4;      /* panel sedikit lebih dalam */
+  --paper: #ffffff;        /* kartu — putih bersih */
+  --sand: #e3e8f1;         /* panel halus */
+  --line: #dbe1ec;         /* garis / border */
+  --line-soft: #e7ebf3;
+
+  /* Latar per-section (soft, tiap section beda) */
+  --cloud: #f4f6fb;        /* abu-putih netral — wrapper & contact */
+  --tint-blue: #dae4f6;    /* periwinkle — hero, CTA */
+  --tint-green: #e4ecd6;   /* sage lembut — about, stats */
+  --tint-sky: #dfeaf7;     /* biru pucat — game */
+  --tint-lav: #e8e5f4;     /* lavender lembut — skills */
+
+  /* Aksen biru (primary) — lebih pekat untuk kontras */
+  --accent: #517bc0;         /* aksen utama (ikon, garis, teks aksen) */
+  --accent-strong: #3a63ab;  /* tombol isi + teks putih (AA di atas putih) */
+  --accent-soft: #aec5ec;    /* aksen terang */
+  --accent-tint: #e4ebfa;    /* background chip / hover */
+  --accent-tint-2: #d3e0f6;
+  --honey: #6a97dd;          /* highlight biru terang (shimmer) */
+  --clay: #8ba1d0;           /* sekunder — biru-abu */
+
+  /* Aksen hijau (secondary) — untuk variasi antar-section */
+  --green: #82a94a;
+  --green-strong: #5e7f2c;   /* tombol hijau + teks putih */
+  --green-soft: #c6da9c;
+  --green-tint: #edf3df;     /* chip / hover hijau */
+
+  /* Teks — abu arang sejuk, tidak pernah hitam / navy */
+  --ink: #2e3846;          /* judul / teks tebal */
+  --ink-soft: #4f5a69;     /* body */
+  --ink-mute: #7d8797;     /* caption */
+
+  /* Pendukung */
+  --sage: #5f9a7e;         /* titik status "Aktif / Open to Work" */
+  --sage-tint: #e3efe8;
+
+  color-scheme: light;
+}
+
+/* Situs ini sengaja berkomitmen pada satu tampilan terang.
+   Paksa mode terang walau device/browser minta dark. */
+:root[data-theme="dark"],
+:root:not([data-theme="light"]) {
+  color-scheme: light;
+}
+
+@layer base {
+  html {
+    background: var(--cloud);
+  }
+
+  body {
+    background: var(--cloud);
+    color: var(--ink);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3, .font-heading {
+    font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--ink);
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cream-2);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-soft);
+  border-radius: 9999px;
+  border: 2px solid var(--cream-2);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/*
+  ============================================================
+  UTILITAS
+  ============================================================
+*/
+
+/* Grid halus warna sejuk */
+.bg-grid-warm {
+  background-size: 44px 44px;
+  background-image:
+    linear-gradient(to right, rgba(72, 107, 146, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(72, 107, 146, 0.06) 1px, transparent 1px);
+}
+
+/* Titik-titik halus */
+.bg-dots-warm {
+  background-image: radial-gradient(rgba(72, 107, 146, 0.14) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Panel kaca */
+.glass-cream {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 18px 40px -18px rgba(46, 58, 79, 0.16),
+    0 4px 14px -6px rgba(72, 107, 146, 0.12);
+}
+
+.shadow-warm {
+  box-shadow:
+    0 22px 48px -20px rgba(46, 58, 79, 0.20),
+    0 6px 18px -10px rgba(72, 107, 146, 0.14);
+}
+.shadow-warm-sm {
+  box-shadow: 0 10px 24px -14px rgba(46, 58, 79, 0.18);
+}
+
+/* Perspektif 3D untuk animasi label & gambar */
+.scene-3d {
+  perspective: 1200px;
+  perspective-origin: 50% 40%;
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/*
+  ============================================================
+  KEYFRAMES
+  ============================================================
+*/
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
+}
+@keyframes float-y-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-26px) rotate(3deg); }
+}
+@keyframes blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(24px, -30px) scale(1.08); }
+  66% { transform: translate(-20px, 18px) scale(0.94); }
+}
+@keyframes drift {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes pop-in {
+  0% { opacity: 0; transform: translateY(24px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes tilt-3d {
+  0%, 100% { transform: rotateX(6deg) rotateY(-12deg); }
+  50% { transform: rotateX(-4deg) rotateY(12deg); }
+}
+@keyframes rise-letters {
+  0% { opacity: 0; transform: translateY(40px) rotateX(-60deg); }
+  100% { opacity: 1; transform: translateY(0) rotateX(0deg); }
+}
+@keyframes ring-progress {
+  from { stroke-dashoffset: var(--ring-len, 283); }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Animasi masuk berbasis CSS murni (fill-mode both) —
+   tampil benar sejak render pertama, tidak bergantung pada state JS. */
+@keyframes enter-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes enter-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes enter-pop {
+  0% { opacity: 0; transform: translateY(18px) scale(0.94); }
+  100% { opacity: 1; transform: none; }
+}
+.enter-up { animation: enter-up 0.75s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+.enter-fade { animation: enter-fade 0.8s ease-out both; }
+.enter-pop { animation: enter-pop 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .enter-up, .enter-fade, .enter-pop { animation-duration: 0.001s; }
+}
+
+.animate-float-y { animation: float-y 6s ease-in-out infinite; }
+.animate-float-y-slow { animation: float-y-slow 9s ease-in-out infinite; }
+.animate-blob { animation: blob 18s ease-in-out infinite; }
+.animate-spin-slow { animation: spin-slow 22s linear infinite; }
+.animate-tilt-3d { animation: tilt-3d 12s ease-in-out infinite; }
+
+/* Teks gradien menyapu */
+.text-shimmer {
+  background: linear-gradient(
+    100deg,
+    var(--accent-strong) 20%,
+    var(--honey) 40%,
+    var(--accent-soft) 55%,
+    var(--accent-strong) 75%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+
+/* Reveal saat scroll (dipakai komponen Reveal3D sebagai fallback) */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-y,
+  .animate-float-y-slow,
+  .animate-blob,
+  .animate-spin-slow,
+  .animate-tilt-3d,
+  .text-shimmer {
+    animation: none !important;
+  }
+}
+
+/*
+  ============================================================
+  DIORAMA "DUNIA MEJA KERJA" — mesin kamera menjelajah ruangan
+  ============================================================
+*/
+
+/* Viewport tetap; scroll ditangani oleh spacer terpisah */
+.dio-viewport {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--cloud);
+}
+
+/* Lapisan warna ambient ruangan (crossfade antar-stasiun) */
+.dio-ambient {
+  position: absolute;
+  inset: -4%;
+  will-change: opacity;
+  transition: opacity 0.25s linear;
+}
+
+/* Panggung: semua objek relatif ke tengahnya; skala saat intro/transisi */
+.dio-stage {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 47%;
+  transition: transform 1.1s cubic-bezier(0.6, 0, 0.15, 1);
+  will-change: transform;
+}
+
+/* Satu stasiun/ruangan — lapisan penuh, objek posisi-absolut dari tengah */
+.dio-station {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.dio-anchor {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+}
+
+/* Objek melayang */
+.dio-obj {
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform, opacity;
+}
+.dio-obj > * { pointer-events: auto; }
+
+/* Bayangan lantai lembut */
+.dio-shadow {
+  position: absolute;
+  left: 50%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(46,58,79,0.2), transparent 70%);
+  transform: translateX(-50%);
+  filter: blur(3px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Idle bob berbeda-beda */
+@keyframes dio-bob   { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes dio-bob-2 { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-16px) rotate(1.5deg); } }
+@keyframes dio-bob-3 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+.dio-bob   { animation: dio-bob 6s ease-in-out infinite; }
+.dio-bob-2 { animation: dio-bob-2 8.5s ease-in-out infinite; }
+.dio-bob-3 { animation: dio-bob-3 5s ease-in-out infinite; }
+
+/* Fallback vertikal (mobile / reduced motion) — stasiun jadi section normal */
+.dio-fallback .dio-station {
+  position: relative;
+  inset: auto;
+  transform: none !important;
+  opacity: 1 !important;
+  width: 100%;
+  height: auto;
+  min-height: auto;
+  display: block;
+  padding: 4.5rem 1.25rem;
+  overflow: visible;
+  pointer-events: auto;
+}
+.dio-fallback .dio-anchor {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: 100%;
+  height: auto;
+  max-width: 30rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: stretch;
+}
+.dio-fallback .dio-obj { position: static; }
+/* warna ambient per ruangan di mode fallback */
+.dio-fallback .dio-station[data-station="welcome"]  { background: var(--tint-blue); }
+.dio-fallback .dio-station[data-station="about"]    { background: var(--tint-green); }
+.dio-fallback .dio-station[data-station="projects"] { background: #ffffff; }
+.dio-fallback .dio-station[data-station="skills"]   { background: var(--tint-lav); }
+.dio-fallback .dio-station[data-station="game"]     { background: var(--tint-sky); }
+.dio-fallback .dio-station[data-station="story"]    { background: var(--tint-green); }
+.dio-fallback .dio-station[data-station="contact"]  { background: var(--cloud); }
+
+@media (prefers-reduced-motion: reduce) {
+  .dio-bob, .dio-bob-2, .dio-bob-3, .dio-stage { animation: none; transition: none; }
+}
+
+/* Kartu "kertas" diorama — permukaan objek */
+.paper-card {
+  background: linear-gradient(160deg, #ffffff, #f4f7fc);
+  border: 1px solid var(--line);
+  border-radius: 1.4rem;
+  box-shadow:
+    0 30px 60px -24px rgba(46,58,79,0.28),
+    0 10px 24px -14px rgba(72,107,146,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+/* Bingkai polaroid */
+.polaroid {
+  background: #ffffff;
+  padding: 12px 12px 42px;
+  border-radius: 6px;
+  box-shadow: 0 26px 50px -20px rgba(46,58,79,0.35), 0 6px 14px -8px rgba(46,58,79,0.25);
+}
+
+/* Selotip washi */
+.washi {
+  position: absolute;
+  height: 26px;
+  background: repeating-linear-gradient(45deg, var(--accent-soft) 0 8px, #cfe0f5 8px 16px);
+  opacity: 0.85;
+  box-shadow: 0 3px 8px -3px rgba(46,58,79,0.25);
+}
