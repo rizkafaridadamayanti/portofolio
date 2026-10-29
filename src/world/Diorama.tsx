@@ -4,7 +4,9 @@ import { useJourney, useLayout, StationXProvider, useStationX, StationIndexProvi
 
 /* ============================================================
    WorldScene — panggung tetap; objek memposisikan diri sendiri
-   (parallax 2D manual, tanpa CSS preserve-3d yang rewel)
+   (parallax 2D manual, tanpa CSS preserve-3d yang rewel).
+   Di layar sempit panggung yang sama hanya diskalakan (stageScale)
+   supaya komposisinya sebanding dengan versi desktop.
    ============================================================ */
 const WorldBackdrop: React.FC = () => {
   const { camX, camY } = useJourney();
@@ -48,22 +50,15 @@ const WorldBackdrop: React.FC = () => {
 };
 
 export const WorldScene: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isDesktop, motionOk } = useLayout();
+  const { diorama, stageScale } = useLayout();
   const { zoomed, stationF, transition } = useJourney();
 
   // reduced-motion → daftar vertikal biasa (aksesibilitas)
-  if (!motionOk) {
+  if (!diorama) {
     return <div className="dio-fallback relative w-full overflow-hidden">{children}</div>;
   }
 
-  // HP → rel horizontal: satu ruangan satu layar, panah menggeser ke kanan
-  if (!isDesktop) {
-    return (
-      <div className="dio-mobile" data-track>
-        {children}
-      </div>
-    );
-  }
+  const base = zoomed ? 0.44 : 1 - transition * 0.05;
 
   return (
     <>
@@ -78,15 +73,12 @@ export const WorldScene: React.FC<{ children: React.ReactNode }> = ({ children }
         ))}
         <div className="absolute inset-0 bg-dots-warm opacity-25 pointer-events-none [mask-image:radial-gradient(ellipse_75%_65%_at_50%_45%,#000_45%,transparent_100%)]" />
         <WorldBackdrop />
-        <div
-          className="dio-stage"
-          style={{
-            transform: zoomed
-              ? 'scale(0.44) translateY(2%)'
-              : `scale(${(1 - transition * 0.05).toFixed(3)})`,
-          }}
-        >
-          {children}
+        {/* skala dasar dipisah dari .dio-stage supaya transisi zoom intro
+            tidak ikut menganimasikan penyesuaian ukuran di layar sempit */}
+        <div className="dio-scale" style={{ transform: `scale(${stageScale})` }}>
+          <div className="dio-stage" style={{ transform: zoomed ? `scale(${base}) translateY(2%)` : `scale(${base.toFixed(3)})` }}>
+            {children}
+          </div>
         </div>
       </div>
     </>
@@ -102,22 +94,11 @@ export const Station: React.FC<{ index: number; className?: string; children: Re
   children,
 }) => {
   const s = STATIONS[index];
-  const { isMobileDiorama } = useLayout();
-  const sectionClass = isMobileDiorama ? 'dio-room' : 'dio-station';
-
   return (
     <StationIndexProvider value={index}>
       <StationXProvider value={s.x}>
-        <section
-          id={s.id}
-          data-station={s.id}
-          className={`${sectionClass} ${className}`}
-        >
-          {isMobileDiorama ? (
-            <div className="dio-room-col">{children}</div>
-          ) : (
-            <div className="dio-anchor">{children}</div>
-          )}
+        <section id={s.id} data-station={s.id} className={`dio-station ${className}`}>
+          <div className="dio-anchor">{children}</div>
         </section>
       </StationXProvider>
     </StationIndexProvider>
@@ -134,24 +115,11 @@ interface DioObjectProps {
   bob?: 0 | 1 | 2 | 3;
   shadow?: number;
   hoverTilt?: number;
-  /** lebar kolom di HP: 2 = penuh (default), 1 = setengah (grid 2 kolom) */
-  span?: 1 | 2;
-  /** objek murni dekoratif — jadi prop latar di HP, disembunyikan saat reduced-motion */
-  deco?: boolean;
-  /** prop dekoratif yang berisi teks panjang — disembunyikan di HP karena terpotong */
-  decoLabel?: boolean;
   className?: string;
   children: React.ReactNode;
 }
 
-export const DioObject: React.FC<DioObjectProps> = (props) => {
-  const { isDesktop, isMobileDiorama } = useLayout();
-  if (isDesktop) return <DioObjectStage {...props} />;
-  return <DioObjectFlow {...props} isMobileDiorama={isMobileDiorama} />;
-};
-
-/** Panggung desktop: parallax, skala, bayangan lantai, hover tilt. */
-const DioObjectStage: React.FC<DioObjectProps> = ({
+export const DioObject: React.FC<DioObjectProps> = ({
   x = 0,
   y = 0,
   depth = 0.7,
@@ -215,48 +183,6 @@ const DioObjectStage: React.FC<DioObjectProps> = ({
   );
 };
 
-/** HP & fallback: objek ikut alur kolom ruangan. */
-const DioObjectFlow: React.FC<DioObjectProps & { isMobileDiorama: boolean }> = ({
-  x = 0,
-  y = 0,
-  span = 2,
-  deco = false,
-  decoLabel = false,
-  className = '',
-  isMobileDiorama,
-  children,
-}) => {
-  // buang kelas lebar (w-[..]) agar objek mengikuti lebar kolom
-  const cls = className.replace(/\bw-\[[^\]]+\]/g, '').replace(/\bmax-w-\S+/g, '').trim();
-
-  if (!isMobileDiorama) {
-    if (deco) return null;
-    return <div className={`relative w-full ${cls}`}>{children}</div>;
-  }
-
-  if (deco) {
-    // pennant / sticky note bertulisan panjang akan terpotong di layar sempit
-    if (decoLabel) return null;
-    return (
-      <div
-        className="dio-deco"
-        style={{
-          left: `${clamp(50 + x / 18, 16, 84).toFixed(1)}%`,
-          top: `${clamp(50 + y / 16, 10, 90).toFixed(1)}%`,
-        }}
-      >
-        {children}
-      </div>
-    );
-  }
-
-  return (
-    <div className={`dio-flow ${cls}`} style={{ '--span': span } as React.CSSProperties}>
-      <div className="dio-flow-inner">{children}</div>
-    </div>
-  );
-};
-
 /* Judul ruangan */
 export const StationTitle: React.FC<{ kicker: string; title: React.ReactNode; sub?: string; accent?: string }> = ({
   kicker,
@@ -281,7 +207,7 @@ export const StationTitle: React.FC<{ kicker: string; title: React.ReactNode; su
 /** 1 saat ruangan aktif, 0 saat jauh — untuk mematikan hal berat (mis. loop game). */
 export const useRoomFocus = () => {
   const idx = useStationIndex();
-  const { isDesktop } = useLayout();
+  const { diorama } = useLayout();
   const { stationF } = useJourney();
-  return isDesktop ? 1 - clamp(Math.abs(stationF - idx), 0, 1.4) : 1;
+  return diorama ? 1 - clamp(Math.abs(stationF - idx), 0, 1.4) : 1;
 };

@@ -117,7 +117,7 @@ export const ContactStation: React.FC = () => {
       </DioObject>
 
       {/* Kartu email + prangko sosial */}
-      <DioObject span={1} x={330} y={-30} depth={0.92} bob={2} hoverTilt={9} shadow={180} className="w-[15rem]">
+      <DioObject x={330} y={-30} depth={0.92} bob={2} hoverTilt={9} shadow={180} className="w-[15rem]">
         <div className="paper-card p-4">
           <div className="text-[10px] uppercase tracking-wider text-[var(--ink-mute)] font-bold">Email</div>
           <div className="text-xs font-semibold text-[var(--ink)] break-all mb-2">{PERSONAL_INFO.email}</div>
@@ -142,7 +142,7 @@ export const ContactStation: React.FC = () => {
       </DioObject>
 
       {/* Kartu ketersediaan */}
-      <DioObject span={1} x={330} y={185} depth={0.86} bob={3} hoverTilt={8} shadow={150} className="w-[15rem]">
+      <DioObject x={330} y={185} depth={0.86} bob={3} hoverTilt={8} shadow={150} className="w-[15rem]">
         <div className="paper-card p-4 space-y-2">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[var(--sage)] animate-pulse" />
@@ -165,7 +165,7 @@ export const ContactStation: React.FC = () => {
         <Plant size={104} />
       </DioObject>
 
-      <DioObject deco decoLabel x={-330} y={255} depth={0.6} bob={2} hoverTilt={6}>
+      <DioObject deco x={-330} y={255} depth={0.6} bob={2} hoverTilt={6}>
         <div className="flex items-center gap-2 text-[11px] text-[var(--ink-mute)] font-mono bg-white/80 px-3 py-1.5 rounded-full border border-[var(--line)]">
           <MapPin className="w-3.5 h-3.5 text-[var(--accent)]" /> Kediri, Indonesia
           <span className="text-[var(--line)]">·</span>

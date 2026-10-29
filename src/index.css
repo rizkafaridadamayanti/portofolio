@@ -274,6 +274,14 @@
   transition: opacity 0.25s linear;
 }
 
+/* Skala dasar panggung (layar sempit). Dipisah dari .dio-stage supaya
+   transisi zoom intro tidak ikut menganimasikan perubahan skala ini. */
+.dio-scale {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 47%;
+}
+
 /* Panggung: semua objek relatif ke tengahnya; skala saat intro/transisi */
 .dio-stage {
   position: absolute;
@@ -354,133 +362,21 @@
   align-items: stretch;
 }
 .dio-fallback .dio-obj { position: static; }
-/* warna ambient per ruangan (mode fallback & mode HP) */
-.dio-fallback .dio-station[data-station="welcome"],
-.dio-mobile .dio-room[data-station="welcome"]  { background: var(--tint-blue); }
-.dio-fallback .dio-station[data-station="about"],
-.dio-mobile .dio-room[data-station="about"]    { background: var(--tint-green); }
-.dio-fallback .dio-station[data-station="projects"],
-.dio-mobile .dio-room[data-station="projects"] { background: #ffffff; }
-.dio-fallback .dio-station[data-station="skills"],
-.dio-mobile .dio-room[data-station="skills"]   { background: var(--tint-lav); }
-.dio-fallback .dio-station[data-station="game"],
-.dio-mobile .dio-room[data-station="game"]     { background: var(--tint-sky); }
-.dio-fallback .dio-station[data-station="story"],
-.dio-mobile .dio-room[data-station="story"]    { background: var(--tint-green); }
-.dio-fallback .dio-station[data-station="contact"],
-.dio-mobile .dio-room[data-station="contact"]  { background: var(--cloud); }
+/* warna ambient per ruangan di mode fallback */
+.dio-fallback .dio-station[data-station="welcome"]  { background: var(--tint-blue); }
+.dio-fallback .dio-station[data-station="about"]    { background: var(--tint-green); }
+.dio-fallback .dio-station[data-station="projects"] { background: #ffffff; }
+.dio-fallback .dio-station[data-station="skills"]   { background: var(--tint-lav); }
+.dio-fallback .dio-station[data-station="game"]     { background: var(--tint-sky); }
+.dio-fallback .dio-station[data-station="story"]    { background: var(--tint-green); }
+.dio-fallback .dio-station[data-station="contact"]  { background: var(--cloud); }
 
-/*
-  ============================================================
-  DIORAMA MOBILE — rel horizontal: satu ruangan satu layar, panah
-  kiri/kanan (juga geser) memindahkan ruangan ke samping. Tidak ada
-  gerakan ke bawah; isi ruangan dirapatkan dalam grid 2 kolom.
-  ============================================================
-*/
-.dio-mobile {
-  display: flex;
-  width: 100%;
-  height: 100vh;
-  height: 100dvh;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  overscroll-behavior-x: contain;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-.dio-mobile::-webkit-scrollbar {
-  display: none;
-}
-
-.dio-mobile .dio-room {
-  position: relative;
-  isolation: isolate;
-  flex: 0 0 100vw;
-  width: 100vw;
-  height: 100%;
-  display: flex;
-  overflow-x: hidden;
-  overflow-y: auto;
-  scroll-snap-align: center;
-  padding: 3.5rem 1.25rem 5rem;
-}
-
-.dio-mobile .dio-room-col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-auto-rows: min-content;
-  align-content: center;
-  align-items: start;
-  gap: 0.8rem;
-  width: min(100%, 34rem);
-  margin: auto;
-}
-
-/* Kartu diorama: --span 2 = selebar ruangan, 1 = setengah (grid 2 kolom). */
-.dio-mobile .dio-flow {
-  grid-column: span var(--span, 2);
-  min-width: 0;
-}
-
-.dio-mobile .dio-flow-inner {
-  width: 100%;
-}
-
-/* lebar kartu mengikuti sel grid walau ukurannya dipatok di elemen dalam */
-.dio-mobile .dio-flow-inner > * {
-  width: 100% !important;
-  max-width: 100% !important;
-}
-
-/* properti meja jadi latar ruangan; .dio-room adalah stacking context
-   (punya transform) sehingga z-index -1 jatuh di belakang kartu */
-.dio-mobile .dio-deco {
-  position: absolute;
-  z-index: -1;
-  opacity: 0.32;
-  transform: translate(-50%, -50%) scale(0.8);
-  pointer-events: none;
-}
-
-/* HP: semua ukuran konten ruangan diturunkan seragam supaya tidak
-   memenuhi layar — berlaku untuk 7 ruangan, bukan per-ruangan. */
+/* HP: matikan efek kaca yang mahal (panggung diorama menyusut di layar sempit) */
 @media (max-width: 1023px) {
   .glass-cream {
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-  }
-  .dio-mobile .dio-room {
-    padding: 4.5rem 1.75rem;
-  }
-  .dio-mobile .dio-room-col {
-    gap: 1rem;
-  }
-  .dio-mobile .paper-card {
-    padding: 0.9rem;
-  }
-  /* judul ruangan & nama di kartu sapaan */
-  .dio-mobile .dio-flow-inner h1 {
-    font-size: 1.75rem;
-  }
-  .dio-mobile .dio-flow-inner h2 {
-    font-size: 1.5rem;
-  }
-  /* skala huruf kecil ikut turun supaya seluruh ruangan terasa lebih ringan */
-  .dio-mobile .text-\[13px\] {
-    font-size: 12px;
-  }
-  .dio-mobile .text-\[12px\] {
-    font-size: 11px;
-  }
-  .dio-mobile .text-\[11px\] {
-    font-size: 10.5px;
-  }
-  /* area permainan jangan memenuhi lebar layar */
-  .dio-mobile .dio-game {
-    max-width: 18rem;
-    margin-inline: auto;
   }
 }
 

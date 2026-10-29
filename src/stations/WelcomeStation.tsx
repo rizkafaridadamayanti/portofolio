@@ -80,7 +80,7 @@ export const WelcomeStation: React.FC = () => {
       </DioObject>
 
       {/* Foto polaroid */}
-      <DioObject span={1} x={230} y={-30} depth={0.86} bob={2} hoverTilt={10} shadow={230} className="w-[17rem]">
+      <DioObject x={230} y={-30} depth={0.86} bob={2} hoverTilt={10} shadow={230} className="w-[17rem]">
         <div className="polaroid" style={{ transform: 'rotate(4deg)' }}>
           <div className="washi" style={{ width: 120, top: -14, left: 60, transform: 'rotate(-8deg)' }} />
           <ProfileImage rounded="rounded-[3px]" className="w-full aspect-[4/5] bg-gradient-to-b from-[#eef3fb] to-[#e2ebf7]" />
@@ -91,7 +91,7 @@ export const WelcomeStation: React.FC = () => {
       </DioObject>
 
       {/* Kartu fakta cepat */}
-      <DioObject span={1} x={420} y={165} depth={0.94} bob={3} hoverTilt={11} shadow={170} className="w-[15.5rem]">
+      <DioObject x={420} y={165} depth={0.94} bob={3} hoverTilt={11} shadow={170} className="w-[15.5rem]">
         <div className="paper-card p-4 space-y-2.5">
           <div className="text-[10px] uppercase tracking-wider text-[var(--ink-mute)] font-bold">Sekilas</div>
           {facts.map(({ icon: Icon, label, value }) => (
@@ -116,10 +116,10 @@ export const WelcomeStation: React.FC = () => {
       <DioObject deco x={185} y={345} depth={1.16} bob={3} hoverTilt={8}>
         <Keycaps w={190} />
       </DioObject>
-      <DioObject deco decoLabel x={430} y={-260} depth={0.78} bob={1} hoverTilt={6}>
+      <DioObject deco x={430} y={-260} depth={0.78} bob={1} hoverTilt={6}>
         <Pennant label="Open to Work" color="var(--green-strong)" />
       </DioObject>
-      <DioObject deco decoLabel x={-380} y={-270} depth={0.5} bob={2} hoverTilt={5}>
+      <DioObject deco x={-380} y={-270} depth={0.5} bob={2} hoverTilt={5}>
         <Pennant label="Politeknik Negeri Malang · D3 MI" color="var(--accent-strong)" />
       </DioObject>
     </Station>
