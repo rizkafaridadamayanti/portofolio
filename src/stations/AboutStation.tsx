@@ -85,7 +85,7 @@ export const AboutStation: React.FC<{ onNavigate: (id: string) => void }> = ({ o
       </DioObject>
 
       {/* Kartu sedang dipelajari */}
-      <DioObject x={545} y={185} depth={0.9} bob={3} hoverTilt={10} shadow={170} className="w-[15rem]">
+      <DioObject span={1} x={545} y={185} depth={0.9} bob={3} hoverTilt={10} shadow={170} className="w-[15rem]">
         <div className="paper-card p-4">
           <div className="text-[10px] uppercase tracking-wider text-[var(--green-strong)] font-bold mb-2">Sedang saya dalami</div>
           <ul className="space-y-1.5">
@@ -103,7 +103,7 @@ export const AboutStation: React.FC<{ onNavigate: (id: string) => void }> = ({ o
       {JOURNEY_STEPS.map((s, i) => {
         const Icon = stepIcon[s.icon] || Search;
         return (
-          <DioObject key={s.n} x={-430 + i * 214} y={292} depth={1.0} bob={((i % 3) + 1) as 1 | 2 | 3} hoverTilt={12} shadow={120} className="w-[11.5rem]">
+          <DioObject span={1} key={s.n} x={-430 + i * 214} y={292} depth={1.0} bob={((i % 3) + 1) as 1 | 2 | 3} hoverTilt={12} shadow={120} className="w-[11.5rem]">
             <div className="paper-card p-3.5">
               <div className="flex items-center gap-2 mb-1.5">
                 <div className="w-7 h-7 rounded-lg bg-[var(--accent-tint)] text-[var(--accent-strong)] flex items-center justify-center">
@@ -118,7 +118,7 @@ export const AboutStation: React.FC<{ onNavigate: (id: string) => void }> = ({ o
         );
       })}
 
-      <DioObject deco x={-470} y={-90} depth={1.08} bob={2} hoverTilt={8}>
+      <DioObject deco decoLabel x={-470} y={-90} depth={1.08} bob={2} hoverTilt={8}>
         <StickyNote color="#dfe9f6" rotate={-7}>
           <b>5</b> proyek publik
           <br />

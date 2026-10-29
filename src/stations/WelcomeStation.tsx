@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowDown, Sparkles, MousePointerClick, Building2, MapPin, GraduationCap, Clock } from 'lucide-react';
+import { ArrowDown, ArrowRight, Sparkles, MousePointerClick, Building2, MapPin, GraduationCap, Clock } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/profile';
 import { ProfileImage } from '../components/ProfileImage';
 import { Station, DioObject } from '../world/Diorama';
@@ -20,8 +20,8 @@ export const WelcomeStation: React.FC = () => {
   }, []);
 
   const facts = [
-    { icon: MapPin, label: 'Lokasi', value: 'Malang, Indonesia (WIB)' },
-    { icon: GraduationCap, label: 'Kuliah', value: 'D3 MI · Polinema · IPK 3.8+' },
+    { icon: MapPin, label: 'Lokasi', value: 'Kediri, Indonesia (WIB)' },
+    { icon: GraduationCap, label: 'Kuliah', value: 'D3 MI · Politeknik Negeri Malang · IPK 3.88' },
     { icon: Clock, label: 'Balasan', value: PERSONAL_INFO.responseTime },
   ];
 
@@ -54,8 +54,10 @@ export const WelcomeStation: React.FC = () => {
           </p>
           <div className="mt-5 flex items-center gap-2 text-xs font-semibold text-[var(--ink-mute)]">
             <MousePointerClick className="w-4 h-4 text-[var(--accent)]" />
-            Gulir untuk menjelajah ruang kerjaku
-            <ArrowDown className="w-4 h-4 animate-bounce" />
+            <span className="hidden lg:inline">Gulir untuk menjelajah ruang kerjaku</span>
+            <span className="lg:hidden">Geser ke kanan untuk menjelajah ruang kerjaku</span>
+            <ArrowDown className="hidden lg:block w-4 h-4 animate-bounce" />
+            <ArrowRight className="lg:hidden w-4 h-4" />
           </div>
         </div>
       </DioObject>
@@ -78,18 +80,18 @@ export const WelcomeStation: React.FC = () => {
       </DioObject>
 
       {/* Foto polaroid */}
-      <DioObject x={230} y={-30} depth={0.86} bob={2} hoverTilt={10} shadow={230} className="w-[17rem]">
+      <DioObject span={1} x={230} y={-30} depth={0.86} bob={2} hoverTilt={10} shadow={230} className="w-[17rem]">
         <div className="polaroid" style={{ transform: 'rotate(4deg)' }}>
           <div className="washi" style={{ width: 120, top: -14, left: 60, transform: 'rotate(-8deg)' }} />
           <ProfileImage rounded="rounded-[3px]" className="w-full aspect-[4/5] bg-gradient-to-b from-[#eef3fb] to-[#e2ebf7]" />
           <div className="absolute left-0 right-0 bottom-2 text-center font-heading font-bold text-[var(--ink-soft)] text-sm">
-            Rizka · Malang
+            Rizka · Kediri
           </div>
         </div>
       </DioObject>
 
       {/* Kartu fakta cepat */}
-      <DioObject x={420} y={165} depth={0.94} bob={3} hoverTilt={11} shadow={170} className="w-[15.5rem]">
+      <DioObject span={1} x={420} y={165} depth={0.94} bob={3} hoverTilt={11} shadow={170} className="w-[15.5rem]">
         <div className="paper-card p-4 space-y-2.5">
           <div className="text-[10px] uppercase tracking-wider text-[var(--ink-mute)] font-bold">Sekilas</div>
           {facts.map(({ icon: Icon, label, value }) => (
@@ -114,11 +116,11 @@ export const WelcomeStation: React.FC = () => {
       <DioObject deco x={185} y={345} depth={1.16} bob={3} hoverTilt={8}>
         <Keycaps w={190} />
       </DioObject>
-      <DioObject deco x={430} y={-260} depth={0.78} bob={1} hoverTilt={6}>
+      <DioObject deco decoLabel x={430} y={-260} depth={0.78} bob={1} hoverTilt={6}>
         <Pennant label="Open to Work" color="var(--green-strong)" />
       </DioObject>
-      <DioObject deco x={-380} y={-270} depth={0.5} bob={2} hoverTilt={5}>
-        <Pennant label="POLINEMA · D3 MI" color="var(--accent-strong)" />
+      <DioObject deco decoLabel x={-380} y={-270} depth={0.5} bob={2} hoverTilt={5}>
+        <Pennant label="Politeknik Negeri Malang · D3 MI" color="var(--accent-strong)" />
       </DioObject>
     </Station>
   );

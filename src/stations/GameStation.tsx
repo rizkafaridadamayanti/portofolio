@@ -21,7 +21,7 @@ export const GameStation: React.FC = () => {
       </DioObject>
 
       {/* Kabinet arkade */}
-      <DioObject x={175} y={20} depth={0.62} bob={1} hoverTilt={4} shadow={360} className="w-[30rem]">
+      <DioObject x={175} y={20} depth={0.62} bob={1} hoverTilt={4} shadow={360} className="w-[30rem] dio-game">
         <div className="paper-card p-5 relative">
           <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[var(--accent-strong)] text-white text-[11px] font-bold font-heading tracking-widest">ARCADE</div>
           <StackGame active={focus > 0.35} onStats={setStats} />
@@ -29,7 +29,7 @@ export const GameStation: React.FC = () => {
       </DioObject>
 
       {/* Papan skor */}
-      <DioObject x={-370} y={70} depth={1.0} bob={2} hoverTilt={10} shadow={150}>
+      <DioObject span={1} x={-370} y={70} depth={1.0} bob={2} hoverTilt={10} shadow={150}>
         <div className="paper-card p-4 w-[13rem]">
           <div className="flex items-center gap-1.5 pb-2 mb-2 border-b border-[var(--line-soft)]">
             <Trophy className="w-4 h-4 text-[var(--honey)]" />
@@ -44,7 +44,7 @@ export const GameStation: React.FC = () => {
       </DioObject>
 
       {/* Catatan: kenapa ada game */}
-      <DioObject x={-395} y={280} depth={0.9} bob={3} hoverTilt={9} shadow={140} className="w-[17rem]">
+      <DioObject span={1} x={-395} y={280} depth={0.9} bob={3} hoverTilt={9} shadow={140} className="w-[17rem]">
         <StickyNote color="#e6ecf7" rotate={-4}>
           <span className="inline-flex items-center gap-1.5 font-bold text-[var(--accent-strong)]">
             <Lightbulb className="w-3.5 h-3.5" /> Kenapa ada game?
@@ -56,7 +56,7 @@ export const GameStation: React.FC = () => {
       </DioObject>
 
       {/* Chip teknologi pembangun game */}
-      <DioObject deco x={175} y={355} depth={1.06} bob={2} hoverTilt={6} className="w-[28rem]">
+      <DioObject deco decoLabel x={175} y={355} depth={1.06} bob={2} hoverTilt={6} className="w-[28rem]">
         <div className="flex flex-wrap gap-1.5 justify-center">
           {['Canvas 2D', 'requestAnimationFrame', 'Web Audio API', 'localStorage', 'canvas-confetti'].map((t) => (
             <span key={t} className="px-2.5 py-1 rounded-full bg-white/90 border border-[var(--line)] text-[10px] font-semibold text-[var(--ink-soft)] shadow-warm-sm">

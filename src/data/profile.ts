@@ -23,10 +23,10 @@ export const PERSONAL_INFO = {
   initials: 'RFD',
   role: 'Full Stack Developer',
   education: 'D3 Manajemen Informatika',
-  campus: 'Politeknik Negeri Malang (POLINEMA)',
-  campusLocation: 'Malang, Jawa Timur, Indonesia',
+  campus: 'Politeknik Negeri Malang',
+  campusLocation: 'Kediri, Jawa Timur, Indonesia',
   status: 'Terbuka untuk Magang / Kerja',
-  currentJob: 'Web Developer Intern',
+  currentJob: 'Full Stack Developer Intern',
   currentCompany: 'PT Kedata Indonesia Digital',
   currentSince: 'Juni 2026',
   responseTime: '< 24 jam',
@@ -35,10 +35,9 @@ export const PERSONAL_INFO = {
   email: 'rizkafaridadamayantii@gmail.com',
   github: 'https://github.com/rizkafaridadamayanti',
   githubHandle: 'rizkafaridadamayanti',
-  // TODO: ganti dengan URL LinkedIn asli (buka profilmu → salin dari address bar)
-  linkedin: 'https://www.linkedin.com/in/rizka-farida-damayanti',
+  linkedin: 'https://www.linkedin.com/in/rizka-farida-1b9109379',
   linkedinName: 'Rizka Farida',
-  instagram: 'https://instagram.com/rizkafrdd',
+  instagram: 'https://www.instagram.com/rizkafrdd/',
   instagramHandle: '@rizkafrdd',
   kineticTitles: [
     'Full Stack Developer',
@@ -49,7 +48,7 @@ export const PERSONAL_INFO = {
   statsRow: [
     { value: '5', label: 'Proyek di GitHub', desc: 'Web, AI, & otomasi — publik', icon: 'Briefcase' },
     { value: '6+', label: 'Teknologi Dikuasai', desc: 'Laravel, Vue, Next.js, dan lainnya', icon: 'Layers' },
-    { value: '3.8+', label: 'IPK Terjaga', desc: 'D3 MI Polinema (2024–sekarang)', icon: 'Award' },
+    { value: '3.88', label: 'IPK Terjaga', desc: 'D3 MI Politeknik Negeri Malang (2024–sekarang)', icon: 'Award' },
     { value: '1', label: 'Magang Aktif', desc: 'PT Kedata Indonesia Digital', icon: 'Building2' }
   ],
   trustBadges: [
@@ -63,7 +62,7 @@ export const PERSONAL_INFO = {
 /* Pengalaman & aktivitas */
 export const EXPERIENCE = [
   {
-    role: 'Web Developer Intern',
+    role: 'Full Stack Developer Intern',
     org: 'PT Kedata Indonesia Digital',
     period: 'Juni 2026 — sekarang',
     now: true,
@@ -81,7 +80,7 @@ export const EXPERIENCE = [
     points: [
       'Kurikulum vokasi intensif: basis data, pemrograman web, jaringan, IoT',
       'Membangun aplikasi full-stack (WanaCafe, FinStart, ProduktifKu, dll)',
-      'IPK terjaga di atas 3.8',
+      'IPK terjaga di 3.88',
     ],
   },
 ];

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { STATIONS, JOURNEY_VH, clamp } from './journey';
-import { useJourney, StationXProvider, useStationX, StationIndexProvider, useStationIndex } from './JourneyContext';
+import { useJourney, useLayout, StationXProvider, useStationX, StationIndexProvider, useStationIndex } from './JourneyContext';
 
 /* ============================================================
    WorldScene — panggung tetap; objek memposisikan diri sendiri
@@ -48,10 +48,21 @@ const WorldBackdrop: React.FC = () => {
 };
 
 export const WorldScene: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isDesktop, zoomed, stationF, transition } = useJourney();
+  const { isDesktop, motionOk } = useLayout();
+  const { zoomed, stationF, transition } = useJourney();
 
-  if (!isDesktop) {
+  // reduced-motion → daftar vertikal biasa (aksesibilitas)
+  if (!motionOk) {
     return <div className="dio-fallback relative w-full overflow-hidden">{children}</div>;
+  }
+
+  // HP → rel horizontal: satu ruangan satu layar, panah menggeser ke kanan
+  if (!isDesktop) {
+    return (
+      <div className="dio-mobile" data-track>
+        {children}
+      </div>
+    );
   }
 
   return (
@@ -91,11 +102,22 @@ export const Station: React.FC<{ index: number; className?: string; children: Re
   children,
 }) => {
   const s = STATIONS[index];
+  const { isMobileDiorama } = useLayout();
+  const sectionClass = isMobileDiorama ? 'dio-room' : 'dio-station';
+
   return (
     <StationIndexProvider value={index}>
       <StationXProvider value={s.x}>
-        <section id={s.id} data-station={s.id} className={`dio-station ${className}`}>
-          <div className="dio-anchor">{children}</div>
+        <section
+          id={s.id}
+          data-station={s.id}
+          className={`${sectionClass} ${className}`}
+        >
+          {isMobileDiorama ? (
+            <div className="dio-room-col">{children}</div>
+          ) : (
+            <div className="dio-anchor">{children}</div>
+          )}
         </section>
       </StationXProvider>
     </StationIndexProvider>
@@ -112,33 +134,36 @@ interface DioObjectProps {
   bob?: 0 | 1 | 2 | 3;
   shadow?: number;
   hoverTilt?: number;
-  /** objek murni dekoratif — disembunyikan di mode vertikal (mobile) */
+  /** lebar kolom di HP: 2 = penuh (default), 1 = setengah (grid 2 kolom) */
+  span?: 1 | 2;
+  /** objek murni dekoratif — jadi prop latar di HP, disembunyikan saat reduced-motion */
   deco?: boolean;
+  /** prop dekoratif yang berisi teks panjang — disembunyikan di HP karena terpotong */
+  decoLabel?: boolean;
   className?: string;
   children: React.ReactNode;
 }
 
-export const DioObject: React.FC<DioObjectProps> = ({
+export const DioObject: React.FC<DioObjectProps> = (props) => {
+  const { isDesktop, isMobileDiorama } = useLayout();
+  if (isDesktop) return <DioObjectStage {...props} />;
+  return <DioObjectFlow {...props} isMobileDiorama={isMobileDiorama} />;
+};
+
+/** Panggung desktop: parallax, skala, bayangan lantai, hover tilt. */
+const DioObjectStage: React.FC<DioObjectProps> = ({
   x = 0,
   y = 0,
   depth = 0.7,
   bob = 0,
   shadow = 0,
   hoverTilt = 8,
-  deco = false,
   className = '',
   children,
 }) => {
-  const { isDesktop, camX, camY, parX, parY } = useJourney();
+  const { camX, camY, parX, parY } = useJourney();
   const stationX = useStationX();
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
-
-  if (!isDesktop) {
-    if (deco) return null;
-    // buang kelas lebar (w-[..]) agar objek mengikuti lebar kolom di mode vertikal
-    const cls = className.replace(/\bw-\[[^\]]+\]/g, '').replace(/\bmax-w-\S+/g, '').trim();
-    return <div className={`relative w-full ${cls}`}>{children}</div>;
-  }
 
   const worldX = stationX + x;
   const rel = worldX - camX;
@@ -190,6 +215,54 @@ export const DioObject: React.FC<DioObjectProps> = ({
   );
 };
 
+/** HP & fallback: objek ikut alur kolom ruangan. */
+const DioObjectFlow: React.FC<DioObjectProps & { isMobileDiorama: boolean }> = ({
+  x = 0,
+  y = 0,
+  span = 2,
+  deco = false,
+  decoLabel = false,
+  className = '',
+  isMobileDiorama,
+  children,
+}) => {
+  // buang kelas lebar (w-[..]) agar objek mengikuti lebar kolom
+  const cls = className.replace(/\bw-\[[^\]]+\]/g, '').replace(/\bmax-w-\S+/g, '').trim();
+
+  if (!isMobileDiorama) {
+    if (deco) return null;
+    return <div className={`relative w-full ${cls}`}>{children}</div>;
+  }
+
+  if (deco) {
+    // pennant / sticky note bertulisan panjang akan terpotong di layar sempit
+    if (decoLabel) return null;
+    return (
+      <div
+        className="dio-deco"
+        style={{
+          left: `${clamp(50 + x / 18, 16, 84).toFixed(1)}%`,
+          top: `${clamp(50 + y / 16, 10, 90).toFixed(1)}%`,
+        }}
+      >
+        {children}
+      </div>
+    );
+  }
+
+  // miring mengikuti posisi horizontal → terasa seperti kertas di meja, bukan daftar
+  const rot = clamp(x / 230, -2.4, 2.4).toFixed(2);
+
+  return (
+    <div
+      className={`dio-flow ${cls}`}
+      style={{ '--rot': `${rot}deg`, '--span': span } as React.CSSProperties}
+    >
+      <div className="dio-flow-inner">{children}</div>
+    </div>
+  );
+};
+
 /* Judul ruangan */
 export const StationTitle: React.FC<{ kicker: string; title: React.ReactNode; sub?: string; accent?: string }> = ({
   kicker,
@@ -214,6 +287,7 @@ export const StationTitle: React.FC<{ kicker: string; title: React.ReactNode; su
 /** 1 saat ruangan aktif, 0 saat jauh — untuk mematikan hal berat (mis. loop game). */
 export const useRoomFocus = () => {
   const idx = useStationIndex();
-  const { stationF, isDesktop } = useJourney();
+  const { isDesktop } = useLayout();
+  const { stationF } = useJourney();
   return isDesktop ? 1 - clamp(Math.abs(stationF - idx), 0, 1.4) : 1;
 };

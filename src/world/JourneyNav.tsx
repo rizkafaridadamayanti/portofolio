@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { STATIONS, STATION_COUNT } from './journey';
-import { useJourney } from './JourneyContext';
+import { useJourney, useLayout } from './JourneyContext';
 
 export const JourneyNav: React.FC = () => {
-  const { active, goTo, isDesktop, zoomed } = useJourney();
+  const { active, goTo, zoomed } = useJourney();
+  const { wide } = useLayout();
 
   // panah kiri/kanan untuk pindah ruangan
   useEffect(() => {
@@ -54,7 +55,7 @@ export const JourneyNav: React.FC = () => {
             <ArrowLeft className="w-4 h-4" />
           </button>
 
-          {isDesktop ? (
+          {wide ? (
             STATIONS.map((s, i) => (
               <button
                 key={s.id}

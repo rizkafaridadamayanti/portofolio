@@ -25,6 +25,7 @@ export const StoryStation: React.FC<{ onNavigate: (id: string) => void }> = ({ o
         return (
           <DioObject
             key={s.label}
+            span={1}
             x={-330 + (i % 2) * 210}
             y={-15 + Math.floor(i / 2) * 195}
             depth={0.9}

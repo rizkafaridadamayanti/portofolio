@@ -37,7 +37,7 @@ export const SkillsStation: React.FC = () => {
         const Icon = icon(s.name);
         const isOn = active.name === s.name;
         return (
-          <DioObject key={s.name} x={-210 + (i % 3) * 118} y={-70 + Math.floor(i / 3) * 138} depth={0.96} bob={((i % 3) + 1) as 1 | 2 | 3} hoverTilt={16}>
+          <DioObject span={1} key={s.name} x={-210 + (i % 3) * 118} y={-70 + Math.floor(i / 3) * 138} depth={0.96} bob={((i % 3) + 1) as 1 | 2 | 3} hoverTilt={16}>
             <button onClick={() => setActive(s)} className="flex flex-col items-center group focus:outline-none">
               <div
                 className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-warm-sm transition-all ${isOn ? 'scale-110 text-white' : 'bg-white text-[var(--ink-soft)] border border-[var(--line)]'}`}

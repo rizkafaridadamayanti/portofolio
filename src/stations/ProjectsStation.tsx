@@ -90,6 +90,7 @@ export const ProjectsStation: React.FC<{ onOpen: (p: Project) => void }> = ({ on
         return (
           <DioObject
             key={p.id}
+            span={1}
             x={-30 + i * 285}
             y={35 + (i === 1 ? -46 : 24)}
             depth={0.84 - i * 0.05}
@@ -120,7 +121,7 @@ export const ProjectsStation: React.FC<{ onOpen: (p: Project) => void }> = ({ on
       })}
 
       {PERSONAL_INFO.trustBadges.map((b, i) => (
-        <DioObject deco key={b.title} x={-640 + (i % 2) * 1290} y={-320 + Math.floor(i / 2) * 640} depth={1.15} bob={((i % 3) + 1) as 1 | 2 | 3} hoverTilt={8}>
+        <DioObject deco decoLabel key={b.title} x={-640 + (i % 2) * 1290} y={-320 + Math.floor(i / 2) * 640} depth={1.15} bob={((i % 3) + 1) as 1 | 2 | 3} hoverTilt={8}>
           <StickyNote color={i % 2 ? '#e8f0e0' : '#e3ecf7'} rotate={i % 2 ? 5 : -5}>
             <b>{b.title}</b>
             <br />

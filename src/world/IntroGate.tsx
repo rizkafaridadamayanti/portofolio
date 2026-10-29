@@ -87,7 +87,8 @@ export const IntroGate: React.FC<{ onEnter: () => void }> = ({ onEnter }) => {
       </h1>
 
       <p className="enter-up mt-4 text-sm sm:text-lg text-[var(--ink-soft)] font-medium" style={{ animationDelay: '0.55s' }}>
-        Masuk ke ruang kerjaku — gulir untuk menjelajah tiap sudutnya.
+        <span className="hidden lg:inline">Masuk ke ruang kerjaku — gulir untuk menjelajah tiap sudutnya.</span>
+        <span className="lg:hidden">Masuk ke ruang kerjaku — geser ke kanan untuk menjelajah tiap ruangan.</span>
       </p>
 
       <button
