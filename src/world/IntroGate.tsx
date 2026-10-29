@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/profile';
 import { useJourney } from './JourneyContext';
 
@@ -59,10 +59,6 @@ export const IntroGate: React.FC<{ onEnter: () => void }> = ({ onEnter }) => {
       </div>
 
       <div className="relative z-10 flex flex-col items-center">
-      <div className="enter-up inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/85 border border-[var(--line)] text-[var(--accent-strong)] text-xs font-bold tracking-widest uppercase mb-7 shadow-warm-sm">
-        <Sparkles className="w-3.5 h-3.5" /> Portofolio Interaktif
-      </div>
-
       <h1 className="font-heading font-extrabold tracking-tight text-[var(--ink)] leading-[1.05] text-4xl sm:text-6xl xl:text-7xl">
         {NAME.split(' ').map((word, wi) => (
           <span key={wi} className="inline-block whitespace-nowrap mr-[0.25em]">
