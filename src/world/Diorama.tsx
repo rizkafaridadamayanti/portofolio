@@ -250,14 +250,8 @@ const DioObjectFlow: React.FC<DioObjectProps & { isMobileDiorama: boolean }> = (
     );
   }
 
-  // miring mengikuti posisi horizontal → terasa seperti kertas di meja, bukan daftar
-  const rot = clamp(x / 230, -2.4, 2.4).toFixed(2);
-
   return (
-    <div
-      className={`dio-flow ${cls}`}
-      style={{ '--rot': `${rot}deg`, '--span': span } as React.CSSProperties}
-    >
+    <div className={`dio-flow ${cls}`} style={{ '--span': span } as React.CSSProperties}>
       <div className="dio-flow-inner">{children}</div>
     </div>
   );

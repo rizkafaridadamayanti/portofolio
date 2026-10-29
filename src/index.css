@@ -417,11 +417,10 @@
   margin: auto;
 }
 
-/* Kartu diorama: miring tipis. --span 2 = selebar ruangan, 1 = setengah. */
+/* Kartu diorama: --span 2 = selebar ruangan, 1 = setengah (grid 2 kolom). */
 .dio-mobile .dio-flow {
   grid-column: span var(--span, 2);
   min-width: 0;
-  transform: rotate(var(--rot, 0deg));
 }
 
 .dio-mobile .dio-flow-inner {
@@ -453,10 +452,10 @@
     -webkit-backdrop-filter: none;
   }
   .dio-mobile .dio-room {
-    padding: 3rem 1.75rem 4.5rem;
+    padding: 4.5rem 1.75rem;
   }
   .dio-mobile .dio-room-col {
-    gap: 0.7rem;
+    gap: 1rem;
   }
   .dio-mobile .paper-card {
     padding: 0.9rem;
