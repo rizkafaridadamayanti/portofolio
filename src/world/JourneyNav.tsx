@@ -22,14 +22,16 @@ export const JourneyNav: React.FC = () => {
 
   return (
     <>
-      {/* Bar atas: tombol ajakan kerja sama */}
+      {/* Bar atas: tombol ajakan kerja sama — tidak perlu saat sudah di Pojok Surat */}
       <header className="fixed top-0 inset-x-0 z-40 flex items-center justify-end px-4 sm:px-6 py-3 pointer-events-none">
-        <button
-          onClick={() => goTo(STATION_COUNT - 1)}
-          className="pointer-events-auto px-4 py-2 rounded-full bg-[var(--accent-strong)] text-[#f7fafd] text-xs font-bold shadow-warm-sm hover:-translate-y-0.5 transition-transform flex items-center gap-1.5"
-        >
-          Ajak kerja sama <ArrowRight className="w-3.5 h-3.5" />
-        </button>
+        {active < STATION_COUNT - 1 && (
+          <button
+            onClick={() => goTo(STATION_COUNT - 1)}
+            className="pointer-events-auto px-4 py-2 rounded-full bg-[var(--accent-strong)] text-[#f7fafd] text-xs font-bold shadow-warm-sm hover:-translate-y-0.5 transition-transform flex items-center gap-1.5"
+          >
+            Ajak kerja sama <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        )}
       </header>
 
       {/* Dock ruangan */}
