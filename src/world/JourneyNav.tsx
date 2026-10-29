@@ -22,20 +22,8 @@ export const JourneyNav: React.FC = () => {
 
   return (
     <>
-      {/* Bar atas: logo + hire */}
-      <header className="fixed top-0 inset-x-0 z-40 flex items-center justify-between px-4 sm:px-6 py-3 pointer-events-none">
-        <button
-          onClick={() => goTo(0)}
-          className="pointer-events-auto flex items-center gap-2.5 group"
-        >
-          <span className="w-9 h-9 rounded-xl bg-[var(--accent-strong)] text-[#f7fafd] font-heading font-bold text-sm flex items-center justify-center shadow-warm-sm group-hover:-rotate-6 transition-transform">
-            RFD
-          </span>
-          <span className="hidden sm:flex flex-col text-left leading-tight">
-            <span className="font-heading font-bold text-[var(--ink)] text-sm">Rizka Farida</span>
-            <span className="text-[10px] text-[var(--ink-mute)]">Dunia Meja Kerja</span>
-          </span>
-        </button>
+      {/* Bar atas: tombol ajakan kerja sama */}
+      <header className="fixed top-0 inset-x-0 z-40 flex items-center justify-end px-4 sm:px-6 py-3 pointer-events-none">
         <button
           onClick={() => goTo(STATION_COUNT - 1)}
           className="pointer-events-auto px-4 py-2 rounded-full bg-[var(--accent-strong)] text-[#f7fafd] text-xs font-bold shadow-warm-sm hover:-translate-y-0.5 transition-transform flex items-center gap-1.5"
