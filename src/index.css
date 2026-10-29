@@ -326,6 +326,35 @@
   z-index: -1;
 }
 
+/* ------------------------------------------------------------
+   Gerak otomatis (tanpa interaksi): tiap objek mengambang dan
+   bergeser perlahan dalam loop seamless. Dipasang pada pembungkus
+   di dalam .dio-obj supaya tidak menimpa transform posisinya.
+   Arah, amplitudo, tempo, dan fase berbeda tiap objek → terasa
+   tersusun (staggered), bukan serempak.
+   ------------------------------------------------------------ */
+@keyframes dio-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate3d(var(--dx, 12px), calc(var(--dy, 10px) * -1), 0) rotate(var(--dr, 0.8deg));
+  }
+  50% {
+    transform: translate3d(calc(var(--dx, 12px) * 0.35), var(--dy, 10px), 0) rotate(0deg);
+  }
+  75% {
+    transform: translate3d(calc(var(--dx, 12px) * -0.85), calc(var(--dy, 10px) * 0.4), 0)
+      rotate(calc(var(--dr, 0.8deg) * -1));
+  }
+}
+
+.dio-float {
+  animation: dio-drift var(--dur, 22s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
 /* Idle bob berbeda-beda */
 @keyframes dio-bob   { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 @keyframes dio-bob-2 { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-16px) rotate(1.5deg); } }
@@ -381,7 +410,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dio-bob, .dio-bob-2, .dio-bob-3, .dio-stage { animation: none; transition: none; }
+  .dio-bob, .dio-bob-2, .dio-bob-3, .dio-float, .dio-stage { animation: none; transition: none; }
 }
 
 /* Kartu "kertas" diorama — permukaan objek */

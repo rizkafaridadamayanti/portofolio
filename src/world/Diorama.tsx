@@ -153,6 +153,18 @@ export const DioObject: React.FC<DioObjectProps> = ({
 
   const bobClass = bob === 1 ? 'dio-bob' : bob === 2 ? 'dio-bob-2' : bob === 3 ? 'dio-bob-3' : '';
 
+  /* Gerak otomatis: amplitudo & tempo dari depth, arah dari sisi x, fase
+     dari posisi x — jadi tiap objek mengambang dan bergeser sendiri-sendiri
+     (staggered), tidak pernah serempak, dan loop-nya seamless. */
+  const dir = x < 0 ? -1 : 1;
+  const floatVars = {
+    '--dx': `${(dir * (9 + depth * 20)).toFixed(1)}px`,
+    '--dy': `${(6 + depth * 15).toFixed(1)}px`,
+    '--dr': `${(0.35 + depth * 1.1).toFixed(2)}deg`,
+    '--dur': `${(17 + depth * 13).toFixed(1)}s`,
+    '--delay': `${(-((Math.abs(x) % 420) / 420) * 9).toFixed(2)}s`,
+  } as React.CSSProperties;
+
   return (
     <div
       className="dio-obj"
@@ -163,20 +175,22 @@ export const DioObject: React.FC<DioObjectProps> = ({
         pointerEvents: vis > 0.75 ? 'auto' : 'none',
       }}
     >
-      <div className={bobClass}>
-        <div
-          className={className}
-          style={{ transform: `perspective(780px) rotateY(${(faceY + tilt.y).toFixed(2)}deg) rotateX(${tilt.x.toFixed(2)}deg)` }}
-          onMouseMove={hoverTilt ? onMove : undefined}
-          onMouseLeave={hoverTilt ? () => setTilt({ x: 0, y: 0 }) : undefined}
-        >
-          {shadow > 0 && (
-            <div
-              className="dio-shadow"
-              style={{ width: shadow, height: shadow * 0.26, bottom: -26, opacity: 0.35 + vis * 0.4 }}
-            />
-          )}
-          {children}
+      <div className="dio-float" style={floatVars}>
+        <div className={bobClass}>
+          <div
+            className={className}
+            style={{ transform: `perspective(780px) rotateY(${(faceY + tilt.y).toFixed(2)}deg) rotateX(${tilt.x.toFixed(2)}deg)` }}
+            onMouseMove={hoverTilt ? onMove : undefined}
+            onMouseLeave={hoverTilt ? () => setTilt({ x: 0, y: 0 }) : undefined}
+          >
+            {shadow > 0 && (
+              <div
+                className="dio-shadow"
+                style={{ width: shadow, height: shadow * 0.26, bottom: -26, opacity: 0.35 + vis * 0.4 }}
+              />
+            )}
+            {children}
+          </div>
         </div>
       </div>
     </div>
