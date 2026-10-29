@@ -32,7 +32,7 @@ export const JourneyNav: React.FC = () => {
             RFD
           </span>
           <span className="hidden sm:flex flex-col text-left leading-tight">
-            <span className="font-heading font-bold text-[var(--ink)] text-sm">Rizka Farida D.</span>
+            <span className="font-heading font-bold text-[var(--ink)] text-sm">Rizka Farida</span>
             <span className="text-[10px] text-[var(--ink-mute)]">Dunia Meja Kerja</span>
           </span>
         </button>
